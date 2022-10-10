@@ -1,0 +1,42 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+header {
+  color:#1500ff;
+  border-bottom:1px dashed #1500ff;
+}
+
+header h1 {
+  color:#1500ff;
+}
+
+footer {
+  display: none !important;
+}
+
+.btn {
+  display: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ color:#1500ff;
+}
+
+pre {
+ color:#1500ff;
+}
+
+th {
+ border-bottom:1px dashed #1500ff;
+}
+
+hr {
+ color:#1500ff
+}
