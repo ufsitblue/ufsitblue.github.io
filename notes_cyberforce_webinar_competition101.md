@@ -1,4 +1,4 @@
-# CyberForce Webinar: Competition 101
+# ⚡ CyberForce Webinar: Competition 101 ⚡
 
 * As we know, this competition is focused on energy-based infrastructures and networks.
 
