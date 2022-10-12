@@ -6,7 +6,6 @@ Some clarifications about the competition that may not have been addressed in th
 
 <br />
 <br />
-<br />
 
 ## CyberForce '22 - Competition 101 Webinar Notes
 
@@ -15,7 +14,8 @@ If you do not know the information in this webinar, you're gonna have a bad time
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce_webinar_competition101.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce_webinar_competition101.md)
 
-
+<br />
+<br />
 
 ## NIST 800-61 SparkNotes
 
