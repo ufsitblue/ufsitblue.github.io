@@ -4,7 +4,9 @@ Some clarifications about the competition that may not have been addressed in th
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce22_webinar_qna.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce22_webinar_qna.md)
 
-
+<br />
+<br />
+<br />
 
 ## CyberForce '22 - Competition 101 Webinar Notes
 
