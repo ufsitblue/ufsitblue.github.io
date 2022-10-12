@@ -24,5 +24,5 @@ This is an incidence response framework used in US federal computer networks, an
 
 Some very useful, conceptual strategies are specified here. Make sure you at least read section 3 of it.
 
-[https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_NIST_800_61.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_NIST_800_61.md)
-[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf)
+[https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_NIST_800_61.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_NIST_800_61.md) <- My notes
+[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf) <- The full document
