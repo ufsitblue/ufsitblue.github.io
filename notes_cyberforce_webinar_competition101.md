@@ -1,5 +1,7 @@
 # ⚡ CyberForce Webinar: Competition 101 ⚡
 
+This webinar is available at [this YouTube link](https://www.youtube.com/watch?v=tLHke36EX0Y&t=1302s)
+
 * As we know, this competition is focused on energy-based infrastructures and networks.
 
 * Types of teams in this competition
@@ -67,3 +69,17 @@
     - This way, we keep track of our hard work and others can benefit from it in the future.
 
 * As mentioned before, this documentation needs to be written and submitted during the pre-competition phase (Oct 17th ~ November 3rd or so)
+
+
+
+## Q&A section
+
+* The start of this Q&A video on their youtube channel (different from the competition 101 video) starts off with about 20 mins of in-person information; not relevant for us.
+
+* What tools can we use?
+    - **Supposedly ONLY FREE AND/or(?) OPEN SOURCE programs?**
+    - We need to clarify this before the competition.
+
+* Past Competition stuff
+    - https://cyberforce.energy.gov/cyberforce-competition/prior-competitions/doe-cyberforce-competition-2019/
+    - Unfortunately, no past reports are publicized here. Need to look around Google.
