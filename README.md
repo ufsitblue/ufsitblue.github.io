@@ -8,7 +8,7 @@
 <br />
 <br />
 
-## CyberForce '22 - Competition 101 Webinar Notes
+## CyberForce '22 - Notes on Competition Details
 
 Watch this ASAP if you're a participant in this competition.
 
