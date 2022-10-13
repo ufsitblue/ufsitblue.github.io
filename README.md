@@ -1,9 +1,10 @@
 ## TryHackMe Practice notes
 
 * Sysinternals
+    - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_sysinternals.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
 
 * Windows core processes
-    - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
+    - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_sysinternals.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
 
 <br />
 <br />
