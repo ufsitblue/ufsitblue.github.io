@@ -1,8 +1,9 @@
-## CyberForce '22 - Competition Q&A Notes
+## TryHackMe Practice notes
 
-Some clarifications about the competition that may not have been addressed in the Competition 101 webinar.
+* Sysinternals
 
-[https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce22_webinar_qna.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce22_webinar_qna.md)
+* Windows core processes
+    - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
 
 <br />
 <br />
