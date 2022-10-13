@@ -18,9 +18,9 @@ If you do not know the information in this webinar, you're gonna have a bad time
 
 <br />
 
-## NIST 800-61 SparkNotes
+## NIST SP 800-61 SparkNotes
 
-This is an incidence response framework used in US federal computer networks, and is a nice model for us to take inspiration from for the competition.
+This is an incidence response framework used in US federal computer networks, and is the model we will be using during CyberForce 2022.
 
 Some very useful, conceptual strategies are specified here. Make sure you at least read section 3 of it.
 
