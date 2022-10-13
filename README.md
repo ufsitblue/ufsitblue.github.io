@@ -7,7 +7,6 @@
     - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_sysinternals.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
 
 <br />
-<br />
 
 ## CyberForce '22 - Notes on Competition Details
 
@@ -17,7 +16,6 @@ If you do not know the information in this webinar, you're gonna have a bad time
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce_webinar_competition101.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce_webinar_competition101.md)
 
-<br />
 <br />
 
 ## NIST 800-61 SparkNotes
