@@ -123,8 +123,10 @@ Example: `bob:x:1001:1001:,,,:/home/bob:/bin/bash`
 Example: `vivek:$1$fnfffc$pGteyHdicpGOfffXX4ow#5:13064:0:99999:7:::`
 - 1: Username
 - 2: Password hash
-    - `$1$` indicates that it is an MD5 hash (deprecated, insecure)
-    - `$6$` indicates that SHA-512 is being used
+    - The format for this hash is `$hash_type$salt$hashed_password`
+    - `$1$` for the hash type indicates that it is an MD5 hash (deprecated, insecure)
+    - `$6$` for the hash type indicates that SHA-512 is being used
+    - Try this: in python, `import crypt`, then `crypt.crypt("password", "$1$fnfffc$")`
 - 3: Last password change (in UNIX time)
 - 4: Minimum number of days required between password changes
 - 5: Maximum: Max days that the password is valid (forced to change after that)
