@@ -49,15 +49,15 @@ Example of an `ls -la` entry that I ran in my home directory:
 
 ### /etc/:
 
-* "Like the control panel for Linux" (Control center for Mac)
+- "Like the control panel for Linux" (Control center for Mac)
 
 
 ### /etc/sudoers
 
-* This file is mega important
+- This file is mega important
     - If you are root user, or can act as root (with sudo), or are in the root group, then you can read this file (`-r--r-----`)
 
-* The `visudo` command:
+- The `visudo` command:
     - Use this. Don't `sudo vim` or `sudo nano` the sudoers file.
 
 Example: `%admin ALL=(ALL) NOPASSWD: ALL`
@@ -75,4 +75,17 @@ Example: `%admin ALL=(ALL) NOPASSWD: ALL`
 
 
 
-# Sandbox vid 13:
+# Sandbox vid 13: Groups
+
+### groups and id commands
+
+- `groups` and `id` both show you what groups you belong to, but `id` shows you the associated user and group IDs as well
+    - Pay attention to what users and IDs get listed on your machine, for example, that may have been created by default.
+
+
+### usermod command
+
+Example: `sudo usermod -a -G sudo bob`
+- Adds the user `bob` to the existing group, `sudo`
+- `-a` indicates that we're "appending" aka not creating a brand new group
+- `-G` indicates the group name that we're appending to
