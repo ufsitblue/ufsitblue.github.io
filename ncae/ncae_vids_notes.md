@@ -54,10 +54,10 @@ Example of an `ls -la` entry that I ran in my home directory:
 
 ### /etc/sudoers
 
-* Really important file in Linux
+* This file is mega important
     - If you are root user, or can act as root (with sudo), or are in the root group, then you can read this file (`-r--r-----`)
 
+* The `visudo` command:
+    - Use this. Don't `sudo vim` or `sudo nano` the sudoers file.
 
-
-
-##
+Example: ``

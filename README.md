@@ -1,6 +1,8 @@
 ## NCAE Competition prep notes
 
 See the compiled NCAE notes below. These include:
+- 10: Creating user accounts
+- 11: Managing permissions and sudo users
 - 12: Exploring sudoers and removing users
 - 13
 
