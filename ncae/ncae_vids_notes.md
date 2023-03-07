@@ -89,3 +89,19 @@ Example: `sudo usermod -a -G sudo bob`
 - Adds the user `bob` to the existing group, `sudo`
 - `-a` indicates that we're "appending" aka not creating a brand new group
 - `-G` indicates the group name that we're appending to
+
+
+### /etc/group
+
+- Basically /etc/passwd but for groups
+    - Most of the ones on here will have been pre-made by your Linux ditribution for stuff like services
+
+- Worth paying attention to this file in competitions
+    - What groups have been created?
+    - What users have been sneakily added to certain groups such as sudo?
+
+
+
+
+
+# Sandbox vid 13: Passwords and shadow hashes
