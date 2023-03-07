@@ -1,4 +1,4 @@
-## TryHackMe Practice notes
+## Some TryHackMe Blue team notes
 
 * Sysinternals
     - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_sysinternals.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
@@ -10,9 +10,7 @@
 
 ## CyberForce '22 - Notes on Competition Details
 
-Watch this ASAP if you're a participant in this competition.
-
-If you do not know the information in this webinar, you're gonna have a bad time 😬
+Watch this ASAP if you're a participant in this competition >:]
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce_webinar_competition101.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/notes_cyberforce_webinar_competition101.md)
 
