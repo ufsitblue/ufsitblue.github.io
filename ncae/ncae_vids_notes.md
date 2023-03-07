@@ -93,7 +93,7 @@ Example: `sudo usermod -a -G sudo bob`
 
 ### /etc/group
 
-- Basically /etc/passwd but for groups
+- Basically /etc/passwd but for groups (more info about /etc/passwd in vid 13)
     - Most of the ones on here will have been pre-made by your Linux ditribution for stuff like services
 
 - Worth paying attention to this file in competitions
@@ -105,3 +105,8 @@ Example: `sudo usermod -a -G sudo bob`
 
 
 # Sandbox vid 13: Passwords and shadow hashes
+
+
+### /etc/passwd
+
+Example: `bob:x:1001:1001:,,,:/home/bob:/bin/bash`
