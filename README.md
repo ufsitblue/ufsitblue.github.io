@@ -1,10 +1,19 @@
+## NCAE Competition prep notes
+
+See the compiled NCAE notes below:
+
+[https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
+
+
+<br />
+
 ## Some TryHackMe Blue team notes
 
 * Sysinternals
     - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_sysinternals.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
 
 * Windows core processes
-    - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_sysinternals.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
+    - [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/THM_notes_windows_core_processes.md)
 
 <br />
 
