@@ -1,6 +1,6 @@
 # Sandbox vid 10: Creating user accounts
 
-## What does the "useradd" command actually do?
+### What does the "useradd" command actually do?
 
 e.g. Adding a new user, "bob", with `useradd`:
 
@@ -15,14 +15,25 @@ e.g. Adding a new user, "bob", with `useradd`:
 
 
 
+# Sandox vid 11: Exploring sudoers and removing users
+
+
+
+
+
 # Sandox vid 12: Exploring sudoers and removing users
 
-## /etc/:
+### /etc/:
 
 * "Like the control panel for Linux" (Control center for Mac)
 
 
-## /etc/sudoers
+### /etc/sudoers
 
 * Really important file in Linux
     - s
+
+
+
+
+##
