@@ -29,10 +29,16 @@ Example of an `ls -la` entry that I ran in my home directory:
     - The three characters after (`r-x`) indicate that it is readable, _not_ writeable, and executable by the group associated with the file
     - The last three characters (`r-x`) indicate the same thing as before, but these apply to "everyone else" (that is not the owner or group for the file)
 
+- You can modify permissions with `chmod`, e.g. `chmod +x my_epic_program.o`
+
+
 ### `lsattr`
 
 - This lists the "extended" permissions of a file. This can be useful if you can't modify/delete a file even though it seems like you should be able to (chattr +i)
     - [Read more here](https://wiki.archlinux.org/title/File_permissions_and_attributes#File_attributes)
+
+
+###
 
 
 
