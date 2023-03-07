@@ -107,6 +107,28 @@ Example: `sudo usermod -a -G sudo bob`
 # Sandbox vid 13: Passwords and shadow hashes
 
 
-### /etc/passwd
+### /etc/passwd: User accounts
 
 Example: `bob:x:1001:1001:,,,:/home/bob:/bin/bash`
+- First value is just the username (bob)
+- Second value (`x`) indicates that the user has a password, and its hash is stored in `/etc/shadow` -- if you remove this x, the user is set to have no password
+- Third and fourth value (`1001`) indicate the associated user ID (uid) and group ID (gid)
+- Fifth value (`,,,`) stores the full name, room number, etc. that you typically get prompted for when you run `useradd`
+- Sixth value: User's home directory
+- Seventh value (`/bin/bash`): The command/shell associated with the user. Should be `/sbin/nologin` for accounts that should not be logged in with (e.g. service accounts, or the `nobody` user)
+
+
+## /etc/shadow: User password hashes
+
+Example: `vivek:$1$fnfffc$pGteyHdicpGOfffXX4ow#5:13064:0:99999:7:::`
+- 1: Username
+- 2: Password hash
+    - `$1$` indicates that it is an MD5 hash (deprecated, insecure)
+    - `$6$` indicates that SHA-512 is being used
+- 3: Last password change (in UNIX time)
+- 4: Minimum number of days required between password changes
+- 5: Maximum: Max days that the password is valid (forced to change after that)
+- 6: Inactive: Number of days after password expires that account is disabled
+- 7: Expire: Expiration date of password, expressed as days since Jan 1, 1970
+
+Remember that empty values look like `::` -- e.g., if the second field has no value, then that means the user has no password.
