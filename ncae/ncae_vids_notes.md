@@ -60,4 +60,19 @@ Example of an `ls -la` entry that I ran in my home directory:
 * The `visudo` command:
     - Use this. Don't `sudo vim` or `sudo nano` the sudoers file.
 
-Example: ``
+Example: `%admin ALL=(ALL) NOPASSWD: ALL`
+- "Users in the admin group, on any host, may run any command as any user, without a password"
+- `%admins` indicates that the following rule will apply to the "admin" **group**. If the `%` was absent, then it would refer to a user called "admin"
+- The first `ALL` refers to "all hosts"
+- The second `(ALL)` refers to the target users
+- The third and final `ALL` refers to "all commands"
+
+### userdel
+
+`sudo usrdel -r <user>` to both remove a user and delete their home directory
+
+
+
+
+
+# Sandbox vid 13:
