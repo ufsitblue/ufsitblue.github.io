@@ -1,6 +1,8 @@
 ## NCAE Competition prep notes
 
-See the compiled NCAE notes below:
+See the compiled NCAE notes below. These include:
+- 12: Exploring sudoers and removing users
+- 13
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 
