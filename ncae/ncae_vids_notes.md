@@ -104,7 +104,7 @@ Example: `sudo usermod -a -G sudo bob`
 
 
 
-# Sandbox vid 13: Passwords and shadow hashes
+# Sandbox vid 14: Passwords and shadow hashes
 
 
 ### /etc/passwd: User accounts
