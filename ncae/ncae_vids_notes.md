@@ -134,3 +134,30 @@ Example: `vivek:$1$fnfffc$pGteyHdicpGOfffXX4ow#5:13064:0:99999:7:::`
 - 7: Expire: Expiration date of password, expressed as days since Jan 1, 1970
 
 Remember that empty values look like `::` -- e.g., if the second field has no value, then that means the user has no password.
+
+
+
+
+
+# Vid 16: Services
+
+If you don't know what a service is (in terms of networking), pls watch the vid cause I won't recap that here.
+
+Some things to think about in regard to services you find in competition:
+    - What is its purpose?
+    - Does it have a config file? Where?
+    - What is its version / vulnerabilities?
+    - Is it necessary? ***If not, get rid of it!*** (we've learned this the hard way previously)
+
+- Restarting services:
+    - **Do it after editing the settings/config for the service!!!**
+    - e.g. `sudo systemctl restart <service_name>` or `sudo service <service_name> restart`
+    - Is the server running? i.e. `sudo systemctl status <service_name>` or `sudo service <service_name> status`
+
+
+
+
+
+# Vid 17: Exploring network configuration
+
+When we're talking about networking and network configuration, **this is where things start to deviate from Linux ditro to Linux distro**
