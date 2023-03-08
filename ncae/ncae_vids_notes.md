@@ -160,4 +160,12 @@ Some things to think about in regard to services you find in competition:
 
 # Vid 17: Exploring network configuration
 
-When we're talking about networking and network configuration, **this is where things start to deviate from Linux ditro to Linux distro**
+When we're talking about networking and network configuration, **this is where things start to deviate from Linux ditro to Linux distro**.
+
+
+- `ifconfig`
+    - The deprecated (outdated) Linux command for looking at network information
+    - Use the `ip` command instead
+
+- `ip`
+    - Most common usage: `ip a` (lists out all network adapters/interfaces along with their associated IPs, MAC addresses, etc. e.g if you have a wifi card, it'll be listed here... hopefully)
