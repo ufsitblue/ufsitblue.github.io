@@ -4,7 +4,8 @@ See the compiled NCAE notes below. These include:
 - 10: Creating user accounts
 - 11: Managing permissions and sudo users
 - 12: Exploring sudoers and removing users
-- 13: Passwords and shadow hashes
+- 13: Groups
+- 14: Passwords and shadow hashes
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 
