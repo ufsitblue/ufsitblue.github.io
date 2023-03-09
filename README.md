@@ -6,6 +6,12 @@ See the compiled NCAE notes below. These include:
 - 12: Exploring sudoers and removing users
 - 13: Groups
 - 14: Passwords and shadow hashes
+- 16: Network services
+- 17: Exploring network configuration
+- 18: Static network config in Kali / Debian
+- 19: Static network config in CentOS / RHEL
+- 20: Static network config in Ubuntu
+- 22: Temporary, permanent, and flushing IPs
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 

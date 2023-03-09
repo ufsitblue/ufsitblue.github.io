@@ -1,4 +1,4 @@
-# Sandbox vid 10: Creating user accounts
+## 10: Creating user accounts
 
 ### What does the "useradd" command actually do?
 
@@ -17,7 +17,7 @@ e.g. Adding a new user, "bob", with `useradd`:
 
 
 
-# Sandox vid 11: Exploring sudoers and removing users
+# 11: Exploring sudoers and removing users
 
 ### "ls -l"
 
@@ -45,7 +45,7 @@ Example of an `ls -la` entry that I ran in my home directory:
 
 
 
-# Sandox vid 12: Exploring sudoers and removing users
+# 12: Exploring sudoers and removing users
 
 ### /etc/:
 
@@ -75,7 +75,7 @@ Example: `%admin ALL=(ALL) NOPASSWD: ALL`
 
 
 
-# Sandbox vid 13: Groups
+# 13: Groups
 
 ### groups and id commands
 
@@ -104,7 +104,7 @@ Example: `sudo usermod -a -G sudo bob`
 
 
 
-# Sandbox vid 14: Passwords and shadow hashes
+# 14: Passwords and shadow hashes
 
 
 ### /etc/passwd: User accounts
@@ -158,9 +158,11 @@ Some things to think about in regard to services you find in competition:
 
 
 
-# Vid 17: Exploring network configuration
+# 17: Exploring network configuration
 
 When we're talking about networking and network configuration, **this is where things start to deviate from Linux ditro to Linux distro**.
+
+e.g. In Debian systems, you may use the `/etc/network/interfaces` file to configure networking, while on Arch Linux you may be making files in `/etc/systemd/networkd/`
 
 
 - `ifconfig`
@@ -169,3 +171,159 @@ When we're talking about networking and network configuration, **this is where t
 
 - `ip`
     - Most common usage: `ip a` (lists out all network adapters/interfaces along with their associated IPs, MAC addresses, etc. e.g if you have a wifi card, it'll be listed here... hopefully)
+    - Note the NAME of your interface... Usually, it'll be `eth0`, or something along the lines of `wl...`. Get the name right when you're modifying your network configs!
+    - Loopback interface: What is it used for?
+
+
+
+
+
+# 18: Static network config in Debian / Kali
+
+In these Debian-based distros, for command-line network config, we're interested in the `/etc/network/interfaces` file.
+
+Example from Kali-External VM on NCAE MiniHack sandbox:
+```
+source /etc/network/interfaces.d/*
+
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+    address 172.20.0.2
+    netmask 255.255.0.0
+```
+
+Another example (from my cloud server on linode.com) -- note how this one has slightly more info:
+```
+auto lo
+iface lo inet loopback
+
+source /etc/network/interfaces.d/*
+
+auto eth0
+
+iface eth0 inet6 auto
+iface eth0 inet static
+    address 194.195.212.122/24
+    gateway 194.195.212.1
+    up  ip addr add 192.167.227.110/17 dev eth0 label eth0:1
+    down  ip addr add 192.167.227.110/17 dev eth0 label eth0:1
+```
+
+If we needed to use a DHCP server (i.e. auto-assign IPs):
+```
+source /etc/network/interfaces.d/*
+
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 dhcp
+```
+
+- Pop quiz: what is a netmask?
+
+- Review the MiniHacks network diagram that they are requiring of us
+    - Remember, the challenges are accessed through [https://ui.sandbox.ncaecybergames.org/challenges](https://ui.sandbox.ncaecybergames.org/challenges)
+
+**Applying our network config changes**
+- What is the command that you always need to apply changes of a config?
+    - FYI: The network service in Debian machines is typically called `networking`
+
+
+
+
+
+# 19: Static network config in CentOS / RedHat Enterprise Linux (RHEL)
+
+CentOS machines do not have a `/etc/network/interfaces` file (they use a different networking service!)
+
+- Instead, the relevant network config directory is `/etc/sysconfig/network-scripts/`
+    - There is 1 file per interface, e.g. `ifcfg-eth0` and so on...
+
+- In the MiniHack challenge, they require you to use both interfaces on the machine (eth0 and eth1)
+    - Edit the corresponding files
+
+- No nano in CentOS!!!
+
+Example: `/etc/sysconfig/network-scripts/ifcfg-eth0` in MiniHack CentOS (**the router**):
+```
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=eth0
+UUID=ad3643ab-6dac-afa2-e422cc7c0748
+DEVICE=eth0
+ONBOOT=no
+```
+
+- Even though the CentOS machine does not yet have an IP, its config file for eth0 still exists
+
+- Changes made for MiniHack:
+    - edit `BOOTPROTO=static`
+    - edit `ONBOOT=yes`
+    - add `IPADDR=<IP>`
+    - add `NETMASK=<netmask>`
+
+
+**Applying our network config changes**
+- What is the command that you always need to apply changes of a config?
+    - FYI: The network service in CentOS/RHEL is just `network`
+
+
+
+
+
+# 19: Static network config in Ubuntu
+
+Note that Ubuntu still has a `/etc/network/interfaces` file, but it is not used.
+
+- Newer versions of Ubuntu use "Netplan" (in the `/etc/netplan/` directory) for network config
+    - Inside that directory there will typically be "YAML" file(s) containing the network specifications
+
+Example: `/etc/netplan/01-network-manager-all.yaml` in MiniHack Ubuntu (**the web server**):
+```
+network:
+    version: 2
+    renderer: Networkmanager
+```
+
+Example: `/etc/netplan/01-network-manager-all.yaml` from my Linode Ubuntu instance:
+```
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        eth0:
+            dhcp4: yes
+```
+
+- Changes made for MiniHack
+```
+...
+    ethernets:
+        eth0:
+            addresses:
+                - 192.168.<team_num>.2/24
+```
+
+**Applying our network config changes**
+- This time around, even though we use netplan `sudo systemctl restart netplan` doesn't seem to work
+    - Why? Explore how we could make it work
+    - Instead, use: `sudo netplan apply`
+
+
+
+
+
+TODO: resume from vid #21
