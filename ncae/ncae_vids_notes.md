@@ -389,3 +389,5 @@ can anyone figure out how to one-line this?
 
 
 # 24: Web services with Apache
+
+* A good place to start looking for files or configs for services: `/etc/`
