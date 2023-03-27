@@ -3,21 +3,6 @@ Section formatting: "[video number, in playlist-order]: [video title]"
 
 See YouTube playlist [here](https://www.youtube.com/playlist?list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M)
 
-- 10: Creating user accounts 👤
-- 11: Managing permissions and sudo users 🔒
-- 12: Exploring sudoers and removing users ❌
-- 13: Groups 👥
-- 14: Passwords and shadow hashes 🥷
-- 16: Network services 🌐
-- 17: Exploring network configuration 🌐🔧
-- 18: Static network config in Kali / Debian
-- 19: Static network config in CentOS / RHEL
-- 20: Static network config in Ubuntu
-- 22: Temporary, permanent, and flushing IPs 🚽
-- 23: Nc, netcat, ncat, and netcat abuse 🙀
-- 24: Web services with Apache 🌍
-- 25: Router configuration and MiniHack completion 📡
-
 
 ## 10: Creating user accounts 👤
 
