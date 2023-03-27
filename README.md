@@ -13,6 +13,7 @@ See the compiled NCAE notes below. These include:
 - 20: Static network config in Ubuntu
 - 22: Temporary, permanent, and flushing IPs
 - 23: Nc, netcat, ncat, and netcat abuse 🙀
+- 24: Web services with Apache
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 
