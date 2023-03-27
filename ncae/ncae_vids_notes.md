@@ -407,6 +407,9 @@ can anyone figure out how to one-line this?
     - `sudo systemctl enable --now apache2`
 
 
+
+
+
 ## 25: Router configuration and MiniHack completionn 📡
 
 We have the two network interfaces configured... what now? We're still not routing traffic through the router machine to their destination (show diagram)
@@ -414,6 +417,9 @@ We have the two network interfaces configured... what now? We're still not routi
 * In our configuration, remember that the CentOS machine is being designated as a router.
     - Pop quiz: what is a router? What makes it different from a modem?
     - Double pop quiz: what does "modem" mean?
+
+
+### Firewalld - zones
 
 In terms of __routing the network traffic the way we want__, the Linux firewall program "firewalld" will be doing the magic for us.
 
@@ -423,4 +429,38 @@ On CentOS machines:
     - Pop quiz: what to do when the output of a terminal program is not big enough to fit on the screen all at once?
     - Check to see what zone your current network interfaces are associated with (in the MiniHack setup eth0 and eth1 are listed under the "public" zone.)
 
-*
+* What are the default __network services__ associated with each zone?
+    - dhcp: Think of this service as the thing that assigns IPs to stuff on a network that isn't statically configured (e.g. your home wifi). It does other stuff too.
+    - ssh: Our beloved secure remote shell-providing service
+    - mdns: A DNS service to resolve domains (e.g. google.com) to IP addresses.
+    - samba-client: a software package to allow Linux systems to interact with Windows networks.
+
+* Notice that not every zone has the same defaults.
+    - e.g. `external` only has the ssh service enabled by default, `internal` has dhcp, mdns, samba-client, ssh.
+
+* Command to list info about a specific zone: `sudo firewall-cmd --list-all --zone=<zone name>`
+
+Let's think about this... we know that machines in our target network diagram are either laballed as "internal" or "external"
+    - ...it would make sense, then, that our two interfaces lie the internal and external zones, correspingly.
+
+
+### Assigning network interfaces to zones with the CentOS ifcfg configs
+
+Remember that the network diagram specifies that the external router IP be `172.20.#.1/16`, and that the internal router IP be `192.168.#.1/24`.
+
+* As it turns out, you can specify the zone for firewall-cmd in the same file in CentOS that we used to statically configure its network settings
+    - The filepath, as a reminder, is `/etc/sysconfig/network-scripts/ifcfg-interfacename`
+    - Simply add a new line at the bottom such as `ZONE=external`
+
+* Remember what we need to do every time we update a config file for a service
+    - For CentOS, the service name is `network` as we've said before => `sudo systemctl restart network`
+
+* External zone: masquerading
+
+
+### Alternative to ifcfg zone assignment: Using firewall-cmd commands
+
+`sudo firewall-cmd --change-interface=eth1 --zone=internal --permanent`
+
+Note the usage of `--permanent`. Without it, your zone changes will not persist after reboot.
+    - The downside of `--permanent` is that stuff doesn't apply until after you reboot... so you have to run `sudo firewall-cmd --reload`
