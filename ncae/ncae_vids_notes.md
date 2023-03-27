@@ -17,7 +17,7 @@ e.g. Adding a new user, "bob", with `useradd`:
 
 
 
-# 11: Exploring sudoers and removing users
+## 11: Exploring sudoers and removing users
 
 ### "ls -l"
 
@@ -45,7 +45,7 @@ Example of an `ls -la` entry that I ran in my home directory:
 
 
 
-# 12: Exploring sudoers and removing users
+## 12: Exploring sudoers and removing users
 
 ### /etc/:
 
@@ -75,7 +75,7 @@ Example: `%admin ALL=(ALL) NOPASSWD: ALL`
 
 
 
-# 13: Groups
+## 13: Groups
 
 ### groups and id commands
 
@@ -104,7 +104,7 @@ Example: `sudo usermod -a -G sudo bob`
 
 
 
-# 14: Passwords and shadow hashes
+## 14: Passwords and shadow hashes
 
 
 ### /etc/passwd: User accounts
@@ -139,7 +139,7 @@ Remember that empty values look like `::` -- e.g., if the second field has no va
 
 
 
-# Vid 16: Services
+## 16: Services
 
 If you don't know what a service is (in terms of networking), pls watch the vid cause I won't recap that here.
 
@@ -158,7 +158,7 @@ Some things to think about in regard to services you find in competition:
 
 
 
-# 17: Exploring network configuration
+## 17: Exploring network configuration
 
 When we're talking about networking and network configuration, **this is where things start to deviate from Linux ditro to Linux distro**.
 
@@ -178,7 +178,7 @@ e.g. In Debian systems, you may use the `/etc/network/interfaces` file to config
 
 
 
-# 18: Static network config in Debian / Kali
+## 18: Static network config in Debian / Kali
 
 In these Debian-based distros, for command-line network config, we're interested in the `/etc/network/interfaces` file.
 
@@ -236,7 +236,7 @@ iface eth0 dhcp
 
 
 
-# 19: Static network config in CentOS / RedHat Enterprise Linux (RHEL)
+## 19: Static network config in CentOS / RedHat Enterprise Linux (RHEL)
 
 CentOS machines do not have a `/etc/network/interfaces` file (they use a different networking service!)
 
@@ -284,7 +284,7 @@ ONBOOT=no
 
 
 
-# 20: Static network config in Ubuntu
+## 20: Static network config in Ubuntu
 
 Note that Ubuntu still has a `/etc/network/interfaces` file, but it is not used.
 
@@ -326,7 +326,7 @@ network:
 
 
 
-# 22: Temporary IPs, permanent IPs, and flushing IPs
+## 22: Temporary IPs, permanent IPs, and flushing IPs
 
 ### Temporary IPs with ip a
 
@@ -388,6 +388,19 @@ can anyone figure out how to one-line this?
 
 
 
-# 24: Web services with Apache
+## 24: Web services with Apache
+
+* Apache
+    - A free and open source HTTP server that's been around for ages
 
 * A good place to start looking for files or configs for services: `/etc/`
+    - For apache, the web server port and root directory are located in `/etc/apache2/sites-available/000-default.conf`
+    - Sometimes the root of the web server will be `/var/www`, other times `/var/www/html`
+
+* How to start the server? `systemctl` (in Ubuntu), just like we've used before
+    - `sudo systemctl enable --now apache2`
+
+
+## 25: Router configuration and MiniHack completionn
+
+We have the two network interfaces configured... what now? We're still not routing traffic through the router machine to their destination (show diagram)
