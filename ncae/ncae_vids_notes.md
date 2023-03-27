@@ -404,3 +404,12 @@ can anyone figure out how to one-line this?
 ## 25: Router configuration and MiniHack completionn
 
 We have the two network interfaces configured... what now? We're still not routing traffic through the router machine to their destination (show diagram)
+
+* In our configuration, remember that the CentOS machine is being designated as a router.
+    - Pop quiz: what is a router? What makes it different from a modem?
+    - Double pop quiz: what does "modem" mean?
+
+In terms of __routing the network traffic the way we want__, the Linux firewall program "firewalld" will be doing the magic for us.
+
+On CentOS machines:
+- Get info about the current firewall setup: `sudo firewall-cmd --list-all-zones
