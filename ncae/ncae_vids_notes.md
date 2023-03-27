@@ -301,7 +301,7 @@ Example: `/etc/netplan/01-network-manager-all.yaml` in MiniHack Ubuntu (**the we
 ```
 network:
     version: 2
-    renderer: Networkmanager
+    renderer: NetworkManager
 ```
 
 Example: `/etc/netplan/01-network-manager-all.yaml` from my Linode Ubuntu instance:
@@ -337,7 +337,7 @@ network:
 ### Temporary IPs with ip a
 
 Adding a temporary IP with `ip a`:
-`sudo ip a add 192.168.118.3/24 dev eth0`
+`sudo ip a add 192.168.<team_number>.3/24 dev eth0`
 
 - Note that the above IP is temporary, and thus gets wiped after a restart
     - This is why we learn network configs
@@ -437,6 +437,7 @@ On CentOS machines:
 
 * Notice that not every zone has the same defaults.
     - e.g. `external` only has the ssh service enabled by default, `internal` has dhcp, mdns, samba-client, ssh.
+    - We're supposed to be routing traffic to a web server... so where is the HTTP service? We'll get to this soon.
 
 * Command to list info about a specific zone: `sudo firewall-cmd --list-all --zone=<zone name>`
 
@@ -455,7 +456,7 @@ Remember that the network diagram specifies that the external router IP be `172.
 * Remember what we need to do every time we update a config file for a service
     - For CentOS, the service name is `network` as we've said before => `sudo systemctl restart network`
 
-* External zone: masquerading
+* What is "masquerading"?
 
 
 ### Alternative to ifcfg zone assignment: Using firewall-cmd commands
@@ -464,3 +465,78 @@ Remember that the network diagram specifies that the external router IP be `172.
 
 Note the usage of `--permanent`. Without it, your zone changes will not persist after reboot.
     - The downside of `--permanent` is that stuff doesn't apply until after you reboot... so you have to run `sudo firewall-cmd --reload`
+
+
+### What is this "masquerading"?
+
+* External zone: What is "masquerading"?
+    - Masquerading will allow our internal devices to use the machine as a router and connect to the external network
+    - Now how do we make external traffic get to the internal machines? The answer is __port forwarding__.
+
+
+### Port forwarding
+
+`sudo firewall-cmd --zone=external --add-forward-port=port=80:proto=tcp:toport=80:toaddr=192.168.<team_number>.2 --permanent`
+
+* Remember to run `firewall-cmd --reload` to apply the rule.
+
+Now that we have configured port-forwarding, external network traffic can reach our internal web server, but __not the other way around__...
+
+* We port-forwarded, and masquerading is enabled, so what's missing to let the server find its way back out?
+    - Answer: Gateways.
+    - __Q: What is a gateway?__ Maybe you've heard of a "default gateway" when messing aronud with network settings on your PC?
+
+
+### Configuring the gateway on our web server machine
+
+* On Ubuntu, this is done in the network config file we were editing before when statically configuring its IP.
+    - The filepath is something like `/etc/netplan/01-network-manager-all.yaml`
+
+* We have the IP address specified in this file, but not the gateway
+    - We need to add the line `gateway4: 192.168.<team_number>.1`
+    - Be careful about indentation or else YAML will flip out
+    - Q: what does YAML stand for? 🤓
+
+__Our final file for the Ubuntu machine should look like:__
+
+```
+network:
+    version: 2
+    renderer: NetworkManager
+    ethernets:
+        ens18:
+            addresses:
+                - 192.168.<team_number>.2/24
+            gateway4: 192.168.<team_number>.1
+```
+
+* Remember to apply your changes with `sudo netplan apply`
+
+* Restart apache2 (our web service) as well: `sudo systemctl restart apache2`
+
+__Repeat a similar process on the Kali machine__, except instead of editing this funky YAML file, we edit the `/etc/network/interfaces` file so that it looks like:
+```
+source /etc/network/interfaces.d/*
+
+auto lo
+iface lo inet lopback
+
+auto eth0
+iface eth0 inet static
+    address 192.168.<team_num>.100
+    netmask 255.255.255.0
+    gateway 182.168.<team_num>.1
+```
+
+* Now the traffic should be getting routed properly!
+
+Q: How do we list our current gateways in Linux?
+
+Q: Do we need a gateway on External Kali? Why or why not?
+
+__TIDBIT FROM THE VIDEO__:
+- "This is a microcosm of the real event"
+- On competition day, we'll have to do more configuration, more complex services, more requirements.
+- While we are doing this, we will also have the red team attacking us.
+    - Make sure we have backups, be semi-knowledgeable about different network services...
+    - __LOGGING.__ Auditd?
