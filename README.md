@@ -1,19 +1,20 @@
 ## NCAE Competition prep notes
 
 See the compiled NCAE notes below. These include:
-- 10: Creating user accounts
-- 11: Managing permissions and sudo users
-- 12: Exploring sudoers and removing users
-- 13: Groups
-- 14: Passwords and shadow hashes
-- 16: Network services
-- 17: Exploring network configuration
+- 10: Creating user accounts 👤
+- 11: Managing permissions and sudo users 🔒
+- 12: Exploring sudoers and removing users ❌
+- 13: Groups 👥
+- 14: Passwords and shadow hashes 🥷
+- 16: Network services 🌐
+- 17: Exploring network configuration 🌐🔧
 - 18: Static network config in Kali / Debian
 - 19: Static network config in CentOS / RHEL
 - 20: Static network config in Ubuntu
-- 22: Temporary, permanent, and flushing IPs
+- 22: Temporary, permanent, and flushing IPs 🚽
 - 23: Nc, netcat, ncat, and netcat abuse 🙀
-- 24: Web services with Apache
+- 24: Web services with Apache 🌍
+- 25: Router configuration and MiniHack completion 📡
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 

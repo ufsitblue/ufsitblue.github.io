@@ -1,4 +1,25 @@
-## 10: Creating user accounts
+# NCAE Cyber Sandbox Notes
+Section formatting: "[video number, in playlist-order]: [video title]"
+
+See YouTube playlist [here](https://www.youtube.com/playlist?list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M)
+
+- 10: Creating user accounts 👤
+- 11: Managing permissions and sudo users 🔒
+- 12: Exploring sudoers and removing users ❌
+- 13: Groups 👥
+- 14: Passwords and shadow hashes 🥷
+- 16: Network services 🌐
+- 17: Exploring network configuration 🌐🔧
+- 18: Static network config in Kali / Debian
+- 19: Static network config in CentOS / RHEL
+- 20: Static network config in Ubuntu
+- 22: Temporary, permanent, and flushing IPs 🚽
+- 23: Nc, netcat, ncat, and netcat abuse 🙀
+- 24: Web services with Apache 🌍
+- 25: Router configuration and MiniHack completion 📡
+
+
+## 10: Creating user accounts 👤
 
 ### What does the "useradd" command actually do?
 
@@ -17,7 +38,7 @@ e.g. Adding a new user, "bob", with `useradd`:
 
 
 
-## 11: Exploring sudoers and removing users
+## 11: Exploring sudoers and removing users 🔒
 
 ### "ls -l"
 
@@ -45,7 +66,7 @@ Example of an `ls -la` entry that I ran in my home directory:
 
 
 
-## 12: Exploring sudoers and removing users
+## 12: Exploring sudoers and removing users ❌
 
 ### /etc/:
 
@@ -75,7 +96,7 @@ Example: `%admin ALL=(ALL) NOPASSWD: ALL`
 
 
 
-## 13: Groups
+## 13: Groups 👥
 
 ### groups and id commands
 
@@ -104,7 +125,7 @@ Example: `sudo usermod -a -G sudo bob`
 
 
 
-## 14: Passwords and shadow hashes
+## 14: Passwords and shadow hashes 🥷
 
 
 ### /etc/passwd: User accounts
@@ -118,7 +139,7 @@ Example: `bob:x:1001:1001:,,,:/home/bob:/bin/bash`
 - Seventh value (`/bin/bash`): The command/shell associated with the user. Should be `/sbin/nologin` for accounts that should not be logged in with (e.g. service accounts, or the `nobody` user)
 
 
-## /etc/shadow: User password hashes
+### /etc/shadow: User password hashes
 
 Example: `vivek:$1$fnfffc$pGteyHdicpGOfffXX4ow#5:13064:0:99999:7:::`
 - 1: Username
@@ -139,7 +160,7 @@ Remember that empty values look like `::` -- e.g., if the second field has no va
 
 
 
-## 16: Services
+## 16: Services 🌐
 
 If you don't know what a service is (in terms of networking), pls watch the vid cause I won't recap that here.
 
@@ -158,7 +179,7 @@ Some things to think about in regard to services you find in competition:
 
 
 
-## 17: Exploring network configuration
+## 17: Exploring network configuration 🌐🔧
 
 When we're talking about networking and network configuration, **this is where things start to deviate from Linux ditro to Linux distro**.
 
@@ -326,7 +347,7 @@ network:
 
 
 
-## 22: Temporary IPs, permanent IPs, and flushing IPs
+## 22: Temporary IPs, permanent IPs, and flushing IPs 🚽
 
 ### Temporary IPs with ip a
 
@@ -349,7 +370,7 @@ Adding a temporary IP with `ip a`:
 
 
 
-## 23: Netcat (nc)
+## 23: Netcat (nc) 🙀
 
 [Watch the video](https://www.youtube.com/watch?v=_aIac8hweAg&list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M&index=23) if you are unfamiliar with what netcat actually is.
 
@@ -388,7 +409,7 @@ can anyone figure out how to one-line this?
 
 
 
-## 24: Web services with Apache
+## 24: Web services with Apache 🌍
 
 * Apache
     - A free and open source HTTP server that's been around for ages
@@ -401,7 +422,7 @@ can anyone figure out how to one-line this?
     - `sudo systemctl enable --now apache2`
 
 
-## 25: Router configuration and MiniHack completionn
+## 25: Router configuration and MiniHack completionn 📡
 
 We have the two network interfaces configured... what now? We're still not routing traffic through the router machine to their destination (show diagram)
 
@@ -412,4 +433,9 @@ We have the two network interfaces configured... what now? We're still not routi
 In terms of __routing the network traffic the way we want__, the Linux firewall program "firewalld" will be doing the magic for us.
 
 On CentOS machines:
-- Get info about the current firewall setup: `sudo firewall-cmd --list-all-zones
+* Get info about the current firewall setup: `sudo firewall-cmd --list-all-zones`
+    - A bunch of "zones" get spat out: block, dmz (what's a dmz?!), drop, external, home, internal, public, trusted, work,
+    - Pop quiz: what to do when the output of a terminal program is not big enough to fit on the screen all at once?
+    - Check to see what zone your current network interfaces are associated with (in the MiniHack setup eth0 and eth1 are listed under the "public" zone.)
+
+*
