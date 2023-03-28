@@ -558,3 +558,59 @@ __TIDBIT FROM THE VIDEO__:
 Let's say we now want to use SSH on our Ubuntu Server machine, along with the web server functionality we already gave it.
 
 * __Bottom line__: when you want to connect to a computer/server remotely, SSH is one of your go-to tools (particuarly for Linux)
+
+* Question: are you running the SSH service on your machine without knowing?
+    - `sudo systemctl status ssh`
+    - On CentOS or other distros, you sometimes have to add a "d" to the end of service names (Q: what does the d mean?), e.g. `sudo systemctl status sshd`
+
+As it turns out, the Ubuntu machine already had an SSH service running.
+
+### SSH Configs
+
+* Next step: Where are configuration files stored for this service?
+    - Remember the first place to start looking for these: `/etc/`
+    - Take a second to explore the files in the `/etc/ssh` directory.
+
+* `ssh_config`
+    - Notice all of the stuff in this file that's commented out
+    - Notice the include statement at the beginning. This file does not just work by itself.
+
+* `sshd_cohfig`
+    - Q: What could be the purpose of this as opposed to `ssh_config`?
+
+__Potential Security Threat:__ Note that malicious changes to your SSH config don't have to go specifically in one of the two above files, they can also go in the included ones.
+    - Something to consider: How important are these included files? Safer to just delete them?
+
+* General syntax to log in with SSH
+    - `ssh <usrname>@<host>`, e.g. `ssh ben@192.168.20.6`
+    - Q: How do we exit?
+    - Q: How does SSH know to trigger the first-time connection prompt?
+
+
+## 28: SHH keys
+
+SSH has the option to use __assymetric-key authentication__ (public and private keys).
+
+Go to [1:10 in the video](https://www.youtube.com/watch?v=GivTVjSUjRM&list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M&index=28) for a useful diagram.
+
+* The three main SSH cryptographic algorithms to keep in mind (are there more available?):
+    - RSA (as in `id_rsa_key`)
+    - Ed25519 (as in `id_ed25519_key`)
+    - ECDSA (as in `id_ecdsa_key`)
+
+* Check out the permissions on the private keys vs. the public keys
+
+**Remember one of our key points about key rotation/re-generation in the CCDC reflections?**
+
+### The ssh-keygen command (AKA HOW TO ROTATE/CREATE NEW KEYS!)
+
+Example:
+`sudo ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key`
+
+
+* Important note about passphrases: it is actually reasonable to not set any sometimes, because this allows passwordless auth
+    - you would typically want this to set up SSH keys for a website like GitHub
+
+When giving a website/an API your SSH key, make sure you're giving it the public key, not the private key!!!
+
+* Demo: Take a look at what happens when you try to SSH into a server that just changed its public key file.
