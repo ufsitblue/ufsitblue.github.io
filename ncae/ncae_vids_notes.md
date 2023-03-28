@@ -540,3 +540,21 @@ __TIDBIT FROM THE VIDEO__:
 - While we are doing this, we will also have the red team attacking us.
     - Make sure we have backups, be semi-knowledgeable about different network services...
     - __LOGGING.__ Auditd?
+
+
+
+
+
+## 26: ROUTER CONFIG REVIEW 📓
+
+- Basically what it sounds like. Go through [the video](https://www.youtube.com/watch?v=AujsQji3A1Q&list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M&index=26) if you want a "speedrun" of all the steps to get the network traffic to route as specified in the MiniHack diagram.
+
+
+
+
+
+## 27: SSH Basics
+
+Let's say we now want to use SSH on our Ubuntu Server machine, along with the web server functionality we already gave it.
+
+* __Bottom line__: when you want to connect to a computer/server remotely, SSH is one of your go-to tools (particuarly for Linux)

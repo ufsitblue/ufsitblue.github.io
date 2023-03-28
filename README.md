@@ -1,3 +1,10 @@
+## Auditd and sysmon notes
+
+Coming soon (insert 90s-style GeoCities "Under construction" GIF)
+
+<br />
+
+
 ## NCAE Competition prep notes
 
 See the compiled NCAE notes below. These include:
@@ -15,6 +22,7 @@ See the compiled NCAE notes below. These include:
 - 23: Nc, netcat, ncat, and netcat abuse 🙀
 - 24: Web services with Apache 🌍
 - 25: Router configuration and MiniHack completion 📡
+- 26: ROUTER CONFIG REVIEW 📓
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 
