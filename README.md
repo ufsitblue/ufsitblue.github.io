@@ -25,6 +25,16 @@ See the compiled NCAE notes below. These include:
 - 26: ROUTING AND NETWORK CONFIGURING REVIEW 📓
 - 27: SSH basics 🐚
 - 28: Public-key cryptography, Modern public-key crypto algorithms, Using and Generating SSH keys 🔑
+- 29: Passwordless shell access 🗝️🚫
+- 30: SSH service through a router 🐚📡
+- 31: DNS basics 📚
+- 32: DNS - Additional zones 📚🔳
+- 33: DNS service through a router 📚📡
+- 34: The Rsync service ♻️
+- 35: Cron and cronjobs 🕐
+- 36: Rsync and cron: automatic, secure backups 🕐🔏
+- 37: The UFW firewall (no iptables anymore woohoo) 🔥
+- 38: Active connection defense 101 🔫🛰️
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 

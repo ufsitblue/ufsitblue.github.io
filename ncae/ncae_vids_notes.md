@@ -545,7 +545,7 @@ __TIDBIT FROM THE VIDEO__:
 
 
 
-## 26: ROUTER CONFIG REVIEW 📓
+## 26: ROUTING AND NETWORK CONFIGURING REVIEW 📓
 
 - Basically what it sounds like. Go through [the video](https://www.youtube.com/watch?v=AujsQji3A1Q&list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M&index=26) if you want a "speedrun" of all the steps to get the network traffic to route as specified in the MiniHack diagram.
 
@@ -614,3 +614,9 @@ Example:
 When giving a website/an API your SSH key, make sure you're giving it the public key, not the private key!!!
 
 * Demo: Take a look at what happens when you try to SSH into a server that just changed its public key file.
+
+
+
+
+
+## 29: Passwordless shell access 🗝️🚫
