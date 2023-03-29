@@ -27,7 +27,7 @@ See the compiled NCAE notes below. These include:
 - 28: Public-key cryptography, Modern public-key crypto algorithms, Using and Generating SSH keys 🔑
 - 29: Passwordless shell access 🗝️🚫
 - 30: SSH service through a router 🐚📡
-- 31: DNS basics 📚
+- 31: DNS service 101 📚
 - 32: DNS - Additional zones 📚🔳
 - 33: DNS service through a router 📚📡
 - 34: The Rsync service ♻️

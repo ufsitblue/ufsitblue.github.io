@@ -628,6 +628,17 @@ We now know of two ways that public key cryptography is ussed in SSH:
 * The question now, is: How do we setup #2?
     - That is, how do we set up SSH keys to log in without user passwords?
 
+### The easy, painless way to do all of the stuff below
+
+Those were a lot of steps to configure an ssh key authentication for one user. Let's make it easier:
+
+1. Generate a new key for a different user, e.g. `ssh-keygen -t ecdsa -f /home/sandbox/id_sandbox_key`
+2. Use the __ssh-copy-id__ command: `sudo ssh-copy-id -i /home/sandbox/id_sandbox_key sandbox@192.168.8.2`
+    - The above command was ran on the Ubuntu MiniHack machine (the web server)
+    - The result of the command is that we now have an `authorized_keys` file on the sandbox user that contains the public key that we recently generated, and subsequently, we logged into our own machine through SSH.
+
+__Keep reading below for the manual way to do all of this (good to understand)__.
+
 
 ### The <user home directory>/.ssh/authorized_keys file
 
@@ -668,3 +679,91 @@ We can then also grant ownership to bob for the `authorized_keys` if it's not al
 * Authorized keys file should have "644" permissions on it
     - `chmod 644 /home/bob/.ssh/authorized_keys`
     - rea+write to owner, read to group, read to everyone else.
+
+
+### Now, how does a remote SSH user use their private key to connect?
+
+If you generated the remote user's private key on your own server, you can actually transfer it over with SSH itself to get it back to them.
+
+* Example using the `scp` command:
+    - The following sample command is executed from the remote user machine
+    - `scp sandbox@<ubuntu_machine_ip>:<filepath on SSH server where you generated the private key> ./`
+    - If you get a permission denied error, ensure that the user you're trying to scp has even has access to the file you want to copy over. Fix perms with `chown` or `chmod` as needed.
+
+
+### Logging in passwordlessly after setting up authorized key and transferring it over to the appropriate remote user
+
+* The key thing here: using the `-i` option in the ssh command
+
+* Example: `ssh -i /home/sandbox/id_bob_key bob@<ubuntu_machine_ip>`
+
+If you have the aforementioned permissions correctly set for everything, then congrats! You have now used an SSH key to passwordlessly log in to a remote server.
+
+* You now understand why it is so important to keep track of keys and make sure no keys for malicious users are present
+    - __Even if you change a user's password, if the same SSH key still exists, then they can log in regardless!__
+
+
+
+
+
+## 30: SSH service through a router 🐚📡
+
+Remember how some of our firewalld zones had certain services enabled?
+
+If a service is enabled for a certain zone, that service's traffic will be allowed through.
+If not, then it will be blocked.
+
+* Remember the command to list your zones and their options: `sudo firewall-cmd --list-all-zones`
+
+### Restricting SSH traffic to router only to internal machines
+
+`sudo firewall-cmd --zone=external --permanent --remove-service=ssh`
+
+* Reload to apply changes, like usual: `sudo firewall-cmd --reload`
+    - Confirm changes applied with `sudo firewall-cmd --list-all --zone=external`
+
+To undo changes and add back ssh to the zone:
+`sudo firewall-cmd --zone=external --permanent --add-service=ssh`
+`sudo firewall-cmd --reload`
+
+
+### SSH port forwarding
+
+Similar to what we did for forwarding HTTP traffic:
+`sudo firewall-cmd --zone=external --add-forward-port=port=22:proto=tcp:toport=22:toaddr=<ubuntu_machine_ip> --permanent`
+
+
+**Question:** If we have SSH enabled as a service on the external zone, and also have the port-forwarding rule, what will happen when we try SSHing into the router? Will it give us an SSH session directy on the router or will it give us a session on on the machine it's configured to forward to?
+
+Spoiler alert: It sends tour SSH traffic to the forwarded internal machine
+    - At the 12:19 mark in [the video](https://www.youtube.com/watch?v=NzitxTqu2o0&list=PLqux0fXsj7x3WYm6ZWuJnGC1rXQZ1018M&index=30), it shows how it even displays the "Remote host authenticity has changed" SSH warning. This makes sense, because we had SSH'd into the router machine at some point before, so the fact that the same IP in the SSH command now gets forwarded to a new machine should trigger this alert.
+
+* To remove any warnings from servers that you know will have their SSH identities changed, you can delete the `.ssh/known_hosts` file (or just remove the line within the file associated with the server whose identity you know will change)
+
+
+Q: What settings would we change in the zone options if we wanted to be able to SSH into the router itself?
+
+
+
+
+
+## 31: DNS 101
+
+DNS is one of the more challenging services to configure.
+
+### Forward lookups
+
+A DNS forward lookup is the client asking the DNS server:
+"Hey DNS... where is 'ncaecybergames.org'?"
+
+### Reverse lookups
+
+A DNS reverse lookup on the other hand, is:
+"Hey DNS... where is '192.168.1.99'?"
+
+
+### Cofiguring DNS on the Ubuntu machine
+
+We've configured our Ubuntu machine to now be both a web server and an SSH server, so let's just keep using this one and configure DNS on it.
+
+We will be using the __"bind"__ DNS program in this case.
