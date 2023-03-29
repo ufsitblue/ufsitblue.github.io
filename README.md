@@ -22,7 +22,9 @@ See the compiled NCAE notes below. These include:
 - 23: Nc, netcat, ncat, and netcat abuse 🙀
 - 24: Web services with Apache 🌍
 - 25: Router configuration and MiniHack completion 📡
-- 26: ROUTER CONFIG REVIEW 📓
+- 26: ROUTING AND NETWORK CONFIGURING REVIEW 📓
+- 27: SSH basics 🐚
+- 28: Public-key cryptography, Modern public-key crypto algorithms, Using and Generating SSH keys 🔑
 
 [https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md](https://github.com/ufsitblue/ufsitblue.github.io/blob/main/ncae/ncae_vids_notes.md)
 
