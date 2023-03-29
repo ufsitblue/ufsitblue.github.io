@@ -620,3 +620,51 @@ When giving a website/an API your SSH key, make sure you're giving it the public
 
 
 ## 29: Passwordless shell access 🗝️🚫
+
+We now know of two ways that public key cryptography is ussed in SSH:
+1. To identify an SSH server (e.g. ensure it's the legit one by comparing the public key, as opposed to a spoofed one with the same IP)
+2. To let clients remotely SSH into a server without needing to type the server's user password (a client needs to generate a new, separate key. This is not the same key that the server uses to identify itself)
+
+* The question now, is: How do we setup #2?
+    - That is, how do we set up SSH keys to log in without user passwords?
+
+
+### The <user home directory>/.ssh/authorized_keys file
+
+If I'm a user, "bt", then we can go to into (or make, if it doesn't exist) the directory `/home/bt/.ssh` directory, and create a file called `authorized_keys` to specify the __public keys__
+
+* Use the keygen command that we learned before to make a key, and copy the contents of the .pub file into this `authorized_keys` file.
+    - If you have multiple public keys that are authorized, enter them each in their own line within this file.
+
+
+### Key file permission
+
+The SSH service may not trust a key regardless of what you tell it, if it doesn't have the appropriate permissions.
+
+ * We saw this in our practice on March 27th (think back to the demo of me trying to cat out one of my SSH private keys which was not possible because of its permissions)
+    - `ls -la` to list the SSH keys in the directory along with their permissions
+
+* Generally, public keys should have "644" permissions
+    - That is, `chmod 644 <keyfile>`
+    - This gives read+write to the owner, and only read to both the group and everyone else.
+
+* Generally, private keys should be "600" permissions
+    - read+write to only owner
+
+* For the `.ssh` folder, permissions should ne "700"
+    - This may not be what the folder has by default, if, e.g. you created the folder with `sudo mkdir`
+    - 700 => read+write+execute
+
+### The chown and chomd commands
+
+"Change ownership"
+
+* Example: changing the user and group for the .ssh folder for a user called bob:
+    - `sudo chown bob:bob /home/bob/.ssh`
+    - The first `bob` indicates the user, bob, and the second `bob` indicates the group, bob.
+
+We can then also grant ownership to bob for the `authorized_keys` if it's not already owned by them: `sudo chown bob:bob /home/bob/.ssh/authorized_keys`
+
+* Authorized keys file should have "644" permissions on it
+    - `chmod 644 /home/bob/.ssh/authorized_keys`
+    - rea+write to owner, read to group, read to everyone else.
