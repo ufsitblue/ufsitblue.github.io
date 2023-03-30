@@ -1003,3 +1003,42 @@ Simply create/edit `/etc/resolv.conf` and add the `nameserver 172.20.<team_numbe
 
 __Important thing to note about the above command:__
     - DNS does NOT run on TCP. It runs over UDP (note the `proto=udp`)
+
+* Reload: `sudo firewall-cmd --reload`
+
+* Confirm with `sudo firewall-cmd --list-all --zone=external`
+
+* Confirm on external kali machine with `nslookup www.ncaecybergames.org`
+
+
+
+
+
+## 34: The Rsync service ♻️
+
+Let's start automating some basic tasks and their applications to competition environments.
+
+* As an example, let's make a directory, `stuff/`, with 2 files inside: `file1` and `file2`.
+
+* Make a backup directory, `backups/`
+
+### Using rsync
+
+`rsync -av --delete stuff/ backups/`
+
+Quite simply, this has copied the contents of the stuff/ directory into the backups/ directory.
+
+__So... why not just use the `cp` command?__
+
+* The reason: Try modifying a file from the source directory, e.g. `file1`.
+    - When you run `rsync -av --delete stuff/ backups/` again, it will copy over only the differences that were made between the source files and the files already inside the `backups/` directory.
+    - This is huge, because if we're making huge backups, it means that if we have a previous backup, we don't have to manually rewrite all of it to add a new backup that's not much different than the last one (`cp` would write the entire files regardless of their similarity)
+
+* Rsync can also enforce consistency between source and backup locations.
+    - This is the effect of adding `--delete` to our command
+    - That is, if you delete a file in stuff/ and you run the rsync command again, it will delete the file in the backups/ folder as well (not the case if you used the `cp` command)
+    - __Think carefully about whether you want file removals to reflect for your backups__. The knee-jerk (and long-term bad) solution for a large environment is to not enable it.
+    - For competitions, though, we may get away with it without causing too much clutter.
+
+
+### Cron
