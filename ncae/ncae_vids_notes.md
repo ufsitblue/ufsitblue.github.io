@@ -933,3 +933,73 @@ Output:
 
 
 ## 32: DNS - Additional zones 📚🔳
+
+### Setting the DNS server for other local machines
+
+What if we wanted to set the Ubuntu machine as the DNS server for other machines on the local network?
+
+* Simple: Just edit the `/etc/resolv.conf` file, in this case, for the internal kali machine
+    - add the `nameserver 192.168.<team_number>.2` line at the end
+
+
+### Adding subdomains for other websites to our DNS configuration
+
+Let's say we want to program our DNS setup to map the scoring server to `score.ncaecybergames.org`.
+
+* Open and edit `etc/bind/zones/forward.ncaecybergames.org` file that we made before (on Ubuntu)
+    - after the `sandbox` and `www` entries at the bottom of the file, add an entry for `score`
+    - e.g. `score       IN A    172.20.0.1`
+
+* Restart the service
+    - `sudo systemctl restart named`
+
+* Confirm the change with nslookup:
+    - `nslookup score.ncaecybergames.org`
+
+
+### Reverse lookup for an IP not listed in our named.conf.default-zones file
+* What if we wanted the reverse looup to work?
+    - i.e. what if we wanted it to associate the IP 172.20.0.1 with the domain score.ncaecybergames.org
+
+We have to go back to our `/etc/bind/named.conf.default-zones` file and add a new zone block:
+```
+zone "20.172.in-addr.arpa" IN {
+    type master;
+    file "/etc/bind/zones/reverse.ncaecybergames.org";
+    allow-update { none; };
+};
+```
+
+* Now we can go make our change to the reverse.ncaecybergames.org file
+    - __Make sure you increment the serial number again since we're making a new change!__
+    - The line you add to this file is `1.0.    IN PTR  score.ncaecybergames.org.`
+
+* Restart named: `sudo systemctl restart named`
+
+* Confirm with nslookup: `nslookup 172.20.0.1`
+
+
+
+
+
+## 33: DNS service through a router 📚📡
+
+We're gonna route DNS traffic now, similar to what we did for web traffic.
+
+Scenario: The external kali machine has no access to the DNS server currently (remember the only pot that we port-forwarded was 80 for HTTP)
+
+One potentially confusing quirk about doing this:
+    - Because external traffic has to go through the router, we actually need to set the DNS server for external machines to be the router's (external) IP
+
+
+### Set the DNS server to be our router's external IP
+
+Simply create/edit `/etc/resolv.conf` and add the `nameserver 172.20.<team_number>.1` line.
+
+
+### Forward DNS traffic on the CentOS (router) machine
+
+`sudo firewall-cmd --zone=external --permanent --add-forward-port=port=53:proto=udp:toport=53:toaddr=192.168.<team_number>.2`
+
+__Important thing to note about the above command:__
+    - DNS does NOT run on TCP. It runs over UDP (note the `proto=udp`)
