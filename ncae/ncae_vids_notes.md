@@ -767,9 +767,27 @@ A DNS reverse lookup on the other hand, is:
 We've configured our Ubuntu machine to now be both a web server and an SSH server, so let's just keep using this one and configure DNS on it.
 
 We will be using the __"bind"__ Linux DNS program in this case.
+    - install it w/ `sudo apt install bind` if not installed.
 
 * Go to the bind config folder in `/etc/bind` and look at the files in it
     - When referring to the name of the service that bind runs as for DNS, you will likely see "named" as its name.
     - For our purposes let's just say that bind and named refer to the same service (named is technically a subset of the bind software suite)
 
 * Check the status of our bind/named DNS service: `systemctl status named`
+
+
+## named.conf
+
+In the Ubuntu MiniHack machine, this config file is just 3 include statements for other files.
+
+This may not be the case for default named.conf files.
+```
+include "/etc/bind/named.conf.options";
+include "/etc/bind/named.conf.local";
+include "/etc/bind/named.conf.default-zones";
+```
+
+
+### What is our goal here?
+
+A: To get our web server's IP (`192.168.<team_number>.2`) to be associated with a full domain name (e.g. web.ncaeteam1.org) that we can type out in a web browser to load the webpages we're hosting
