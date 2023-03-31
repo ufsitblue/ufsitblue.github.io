@@ -1111,7 +1111,7 @@ What if we opened up one of our cron folders and we had something like:
 
 
 
-## Rsync and cron: automatic, secure backups 🕐🔏
+## 35: Rsync and cron: automatic, secure backups 🕐🔏
 
 Let's start thinking about our backups and cronjobs at a broader scale: doing stuff across our local network.
 
@@ -1245,6 +1245,10 @@ __NOTE__: Every time you delete a rule, the rules below that rule get re-numbere
     - Stop and think when you have a bunch of rules and you're deleting stuff, re-list the rules to ensure the numbers you're deleting are what you think they are.
 
 
+### Inserting iptables rules at a specific spot
+
+Simply just run `sudo ufw insert <rule number> <rule>`
+
 ### A seemingly weird quirk
 
 Let's say we remove the command allowing Kali-Internal to communicate with our Ubuntu machine (aka delete the `ufw allow from 192.168.<team_number>.100` rule)
@@ -1284,3 +1288,141 @@ __Windows trivia__: Unlike Linux, Windows firewalls typically deny pings by defa
 
 * Other rules are `ufw-before-forward` rules
     - These are rules that apply to traffic that our machinei s forwarding to other machines (i.e. the traffic is not intended for us, but has to go through a machine, like in the case of our CentOS router machine)
+
+
+### The point of this ping stuff
+
+The moral of the story with this ufw bing allowing/blocking stuff is:
+1. Check for potential default settings that override user settings on your services
+2. When you ping a computer and it doesn't respond, it doesn't necessarily mean it's off/nonexistent.
+
+
+### Nuclear option: reset all ufw rules
+
+Do this with `sudo ufw reset`
+    - Very kindly, UFW backs up all the rule files in the `/etc/ufw` directory for us when we run this.
+
+
+### UFW conclusion
+
+- Install it -- unless you want to torture yourself with raw iptables/nftables.
+- Ensure that none of the before-rules conflict with your user rules unintendedly
+- Remember that as soon as you enable ufw you need to add rules to let stuff get to it.
+
+The way that firewalls fit into our strategy is as follows:
+1. First, we need to get our networking right
+2. Next, we need to get our services right (web, ssh, DNS, etc.)
+3. THEN, set up your firewall right.
+
+
+### Pro tip from Jason Rice
+
+A lot of people think to themselves: "Oh, I'm just gonna allow traffic from the scoring server and block all attacker traffic."
+
+His response to that: __Good luck.__ (their scoring infrastructure is "extremely hard to profile").
+
+* Creating rules to block attackers is good -- we will likely succeed with this
+* Creating rules to identify and allow only scoring traffic -- we will likely not succeed (they've purposely made it difficult)
+
+
+
+
+
+## 38: Active connection defense 101 🔫🛰️
+
+Scenario: Kali-Internal will act as the server we're defending/monitoring.
+
+* Create 2 new users e.g. `bob` and `alice` on the machine.
+    - Add them with `sudo adduser <username>`
+    - SSH into these users from 2 separate terminal windows in the Ubuntu machine, or other local machine on the network.
+
+### netstat
+
+* When these 2 are conected with ssh, run `netstat`
+    - It shows you open and active connections on your machine
+    - The output is insanely long. Think about maybe piping this to `less` for example.
+
+### netstat filtering
+
+* The `netstat -tu` option
+    - This filters down the output to __only things that are related to TCP and UDP__
+    - Much better! (it even shows us what the services listed are based on the port number)
+    - Waht this doesn't tell you is __which ports are "listening"__ for incoming connections
+
+* The `netstat -tuna` option
+    - Similar to before, but now we see programs that are listening as well as ones that have already established a connection.
+    - e.g. you would see a listening netcat backdoor here, if there was one on your computer (i.e. if it was breached/compromised)
+    - What this doesn't tell us (as well as `-tu`: Which programs are associated with each listening port)
+
+* The `netstat -tunap` option
+    - Same as tuna, except it also lists the associated programs that have are listening/established on a port.
+    - Needs to be run as root (sudo)
+    - When users bob and jenny are connected via ssh, __this is the command that will show which processes their shells correspond to__.
+
+### Booting off Jenny
+
+Let's say we see jenny's SSH session in the `netstat -tunap` option, and jenny turns out to be a malicious hacker.
+
+* Note the process ID (PID) associated with jenny's shell in the command output
+
+* Next, kill jenny's process with `kill <process ID for jenny's SSH shell>` on the Ubuntu machine,
+    - The Ubuntu machine where the jenny SSH session was initiated from now says `Connection to <Kali-Internal IP> closed`
+
+In general, monitoring stuff and killing stuff is something that someone does while the others go ahead and set up, configure, and patch/harden the systems on the network.
+
+### Another quick way to filter netstat
+
+`netstat | grep ESTABLISHED`
+
+### What if you don't have netsat installed?
+
+Option 1: Install it.
+
+Option 2: Use the `ss` command
+
+
+### the 'w' command
+
+Type `w` and run it. You will see a list of users that are logged in as well as where they're logged in from
+    -
+
+* Note the `FROM` field
+    - It lists IP addresses that certain users are connected from
+    - If it says `:0`, then it means it is a local session
+
+
+### Killing processes: an easier way
+
+What if we don't want to figure out the PID?
+
+* `pkill`
+    - `man pkill` to find more about this program
+    - `sudo pkill -KILL -u jenny`: kills the user `jenny`
+
+__Be cautious about killing stuff when both the attacker and you are logged in on your own machine with the same user__
+    - Friendly fire is no good :)
+
+
+### The top/htop command - "task manager" for linux
+
+Type in `top` (or `htop` if it's installed -- has colors as opposed to top).
+
+This is essentially the task manager for Linux terminals.
+
+
+### The ps command - processes in detail
+
+If we want to monitor processes and not so much network-related stuff, a good command to run is:
+`ps aux --forest`
+
+
+## The wall command - send messages to active users
+
+e.g. `wall "Server shutting down in 5 minutes!"`
+    - All logged in users on a computer will receive this message on their terminal screen
+
+* A similar command: `write`
+    - Let's say I want to specifically send a message to bob
+    - First, obtain their TTY name from `w`
+    - Next, run `sudo write bob pts/2`
+    - Stuff that you type will now appear on that user's terminal.
