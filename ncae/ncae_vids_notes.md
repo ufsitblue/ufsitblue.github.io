@@ -419,9 +419,9 @@ We have the two network interfaces configured... what now? We're still not routi
     - Double pop quiz: what does "modem" mean?
 
 
-### Firewalld - zones
+### Firewalld - network zones
 
-In terms of __routing the network traffic the way we want__, the Linux firewall program "firewalld" will be doing the magic for us.
+In terms of __routing the network traffic the way we want__, the Linux firewall program "firewalld" will be doing the magic for us on CentOS.
 
 On CentOS machines:
 * Get info about the current firewall setup: `sudo firewall-cmd --list-all-zones`
@@ -1174,5 +1174,31 @@ Congratulations. You now have set up an automatic cronjob to remotely back stuff
 ## 37: The UFW firewall (no iptables anymore woohoo) 🔥
 
 The scenario: We're trying to secure the services that we've set up on two machines:
-- The Internal Kali machine
-- The Internal Ubuntu machine
+- The Internal Kali machine (IP `192.168.<team_number>.100`)
+- The Internal Ubuntu machine (IP `192.168.<team_number>.2`)
+
+When you need to do something related to firewalling on Linux, ask yourself:
+- Which firewall program am I going to use?
+- How am I going to use it?
+
+* Most linux systems have `iptables` installed
+    - This is the classic simple linux firewall tool.
+    - It is quite commplex, and not all that powerful sometimes.
+    - But most of all, __it is deprecated.__ `nftables` is the tool that should be used instead (your Linux distribution will have this if it's not ancient)
+
+* Instead of directly using iptables (or even nftables), what most Linux sysadmins do is instead use a program that sits "on top" of iptables.
+    - Essentially, programs are made to use iptables under the hood, but make it easier for users to implement their firewall settings.
+
+### UFW
+
+* Ubuntu comes with the firewall program UFW preinstalled. With other distros you may have to install it using your package manager (e.g. `sudo apt install ufw`).
+    - UFW uses iptables/nftables under the hood.
+
+* CentOS uses `firewalld`, as we have seen before when we set up our network zones for routing traffic with the router
+
+### checking and enabling UFW
+
+* Check if UFW is running on Ubuntu with `sudo ufw status`
+    - If it is inactive, enable it with `sudo ufw enable`
+
+* When you first enable ufw, the defaults are very extremely barebones. They're not gonna be blocking or allowing much specifically.
