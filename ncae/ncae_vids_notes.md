@@ -1050,3 +1050,39 @@ As part of the cron program, you get what are called "cron tabs"
 
 * The question, now, is: How many of these crontabs are there and where are they on our system?
     - One way to see some of these is by running `crontab -e`
+    - Take a look at the explanation given in the default crontab file, the comments indicate the syntax and some examples of how to write a cronjob that executes periodically.
+
+* Example: `0 0 * * 0 /home/br/.local/bin/paccache-clear`
+    - "Execute the program `/home/br/.local/bin/paccache-clear` on the 0th minute, on the 0th hour, on every day of the month, on every month of the year, on the 0th day of the week"
+    - In other words, it runs at 0:00 on every Sunday.
+
+__Easy crontab parser/explainer__: [https://crontab.guru](https://crontab.guru)
+
+
+### But how do we view all users' crontabs on a machine
+
+By looking in the `/var/spool/cron/crontabs/` directory
+    - Note: sometimes the directory may just be set as `/var/spool/cron` (this is the case for me using Arch Linux)
+    - Also note: these are not ALL the crontabs, just the user crontabs (more on this later).
+
+* The files in this directory are named according to the user who the crontab is for.
+    - e.g. if my username on my machine is `br` then the crontab would be at `/var/spool/cron/crontabs/br` (or possibly at `/var/spool/cron/br`)
+
+* When a new user runs `crontab -e`, a crontab for them gets created as specified above.
+
+Note: Cron does not need a restart after modifying the crontab, but it might be a good idea to just restart it with `sudo systemctl restart cron` just to build the habit.
+
+
+### cron with rsync for a simple automatic backup
+
+What would a cronjob for the rsync command, `rsync -av /home/sandbox/Desktop/stuff/ /home/sandbox/Desktop/backups/`, look like? (note the absence of the `--delete` option)
+
+A: `* * * * * rsync -av /home/sandbox/Desktop/stuff/ /home/sandbox/Desktop/backups/`
+
+
+### System-wide conjobs
+
+In the `/etc/` directory, you will probably have:
+- `cron.d`: cron example snippets
+- `cron.daily`: system-wide daily cronjobs
+- `cron.hourly`: s
