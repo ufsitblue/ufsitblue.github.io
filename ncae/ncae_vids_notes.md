@@ -1243,3 +1243,44 @@ Previously I mentioned removing rule based on their rule number. Here's an easy 
 
 __NOTE__: Every time you delete a rule, the rules below that rule get re-numbered.
     - Stop and think when you have a bunch of rules and you're deleting stuff, re-list the rules to ensure the numbers you're deleting are what you think they are.
+
+
+### A seemingly weird quirk
+
+Let's say we remove the command allowing Kali-Internal to communicate with our Ubuntu machine (aka delete the `ufw allow from 192.168.<team_number>.100` rule)
+
+The following should be the case: __When we ping the Ubuntu machine from Kali-Internal, the traffic should be blocked__ because the rules at this stage are blocking all traffic from the `192.168.<team_number>.0/24` network
+
+* __But the ping doesn't get blocked. Why?__
+    - Answer: When you install a program, there are often default configurations somewhere that override the user configurations that you set for it.
+
+* What do we mean?
+    - Go run ls on the /etc/ufw directory. Notice the `before.rules` file and the `after.rules` file.
+    - The `before.rules` in particular, is a file with rules that apply __BEFORE THE USER-CREATED RULES THAT YOU SET FOR UFW__.
+
+* Some of these before rules are legitimately useful and needed often
+    - e.g. There is a rule in there that allows your computer to receive an IP from a DHCP server (this is how you get an IP assigned 90% of the time)
+
+
+__The part of the file that made our ping go through despite our deny rule was this__:
+```
+# ok icmp codes for INPUT
+...
+-A ufw-before-input -p icmp --icmp-type echo-request -j ACCEPT
+```
+The rule on the line above tells the Ubuntu machine, "look, if someone tries to ping me, let them ping me"
+
+* If we want to deny pings to the machine, you can change the `ACCEPT` at the end of the line to `DROP`
+    - __Important__: Run `sudo ufw reload` after you edit this file.
+
+Now, the Kali machine can't ping the Ubuntu machine, as expected!
+
+__Windows trivia__: Unlike Linux, Windows firewalls typically deny pings by default. Potentially useful fact to know.
+
+### rule types in the before.rules file
+
+* Input rules: Notice that some of the rules in this before-file file are `ufw-before-input` rules
+    - These are rules that apply to traffic targeted to our machine
+
+* Other rules are `ufw-before-forward` rules
+    - These are rules that apply to traffic that our machinei s forwarding to other machines (i.e. the traffic is not intended for us, but has to go through a machine, like in the case of our CentOS router machine)
