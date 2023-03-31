@@ -1106,3 +1106,36 @@ What if we opened up one of our cron folders and we had something like:
 * This is a malicious backdoor!
     - It runs every minute, giving a reverse shell to whoever connects on port 12345 on the machine
     - Even if you kill the bash process that's listening on that port, a new one is just gonna get created.
+
+
+
+
+
+## Rsync and cron: automatic, secure backups 🕐🔏
+
+Let's start thinking about our backups and cronjobs at a broader scale: doing stuff across our local network.
+
+__The idea__: Use rsync to back up files -- not to our local computer -- but to a remote computer/server.
+
+* On Kali internal machine: `mkdir backups_webserver`
+
+* On Ubuntu: `sync -av -e ssh /home/sandbox/Desktop/stuff/ sandbox@192.168.<team_number>.100:/home/sandbox/backups_webserver`
+
+
+### Automating the remote backup
+
+__There's one problem here if we want to turn this into a cronjob:__
+We're transferring over the files through SSH, how are we gonna input the password every time the cronjob runs?
+
+Answer: __Using SSH keys__ (wiith no passphrases set for the key files)
+
+* `ssh-keygen -t ecdsa -f backup_keys`
+    - Make sure you don't set a passphrase! (or else the cronjob won't work)
+
+* Who owns the private key on the Ubuntu machine?
+    - It would be a good idea to have this as a system-wide cronjob, therefore root should prob own it.
+    - `sudo chown root:root backup_keys`
+    - `sudo mv backup_keys /root`
+
+* The server where we're backing up to gets our (Ubuntu machine) public key.
+    - We will transfer it over to Kali internal with `scp bacup_keys.pub sandbox192.168.<team_number>.100:/home/sandbox`
