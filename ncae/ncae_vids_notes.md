@@ -1122,7 +1122,7 @@ __The idea__: Use rsync to back up files -- not to our local computer -- but to 
 * On Ubuntu: `sync -av -e ssh /home/sandbox/Desktop/stuff/ sandbox@192.168.<team_number>.100:/home/sandbox/backups_webserver`
 
 
-### Automating the remote backup
+### Doing the remote backup with rsync
 
 __There's one problem here if we want to turn this into a cronjob:__
 We're transferring over the files through SSH, how are we gonna input the password every time the cronjob runs?
@@ -1139,3 +1139,40 @@ Answer: __Using SSH keys__ (wiith no passphrases set for the key files)
 
 * The server where we're backing up to gets our (Ubuntu machine) public key.
     - We will transfer it over to Kali internal with `scp bacup_keys.pub sandbox192.168.<team_number>.100:/home/sandbox`
+    - Check the respective directory on the kali machine to ensure that it got copied.
+
+* On the internal Kali, make a .ssh folder if it hasn't been created: `mkdir /home/kali/.ssh`
+    - Then, copy the public key file into the directory, renaming it to `authorized_keys` (this is important): `cp backup_keys.pub ~/.ssh/authorized_keys`
+
+* On Ubuntu:
+    - Test the rsync command that we're gonna make a cronjob for: `sudo rsync -av -e "ssh -i /root/backup_keys" /home/sandbox/Desktop/stuff/ sandbox@192.168.<team_number>.100:/home/sandbox/backups_webserver`
+    - We need to surround the ssh part of the rsync command in quotes, or else rsync will interpret the `-i` as a parameter for its own command, as opposed to a parameter for the ssh command.
+
+* On Kali, now just check to make sure that it got copied over: `ls backups_webserver/`
+
+
+### Automating the remote backup with cron
+
+* Let's say we want to go crazy with this and back up every minutue (a potentially realistic thing to do for a competition)
+    - Then, the crontab entry (in `/etc/crontab`) would be: `* * * * * root rsync -av -e "ssh -i /root/backup_keys" /home/sandbox/Desktop/stuff sandbox@192.168.<team_number>.100:/home/sandbox/backups_webserver`
+
+
+__A quick note about trailing '/' characters for rsync__:
+Note that in the command I wrote to test the ssh-thru-rsync backup, the filepath I specified to get copied over was `/home/sandbox/Desktop/stuff/`, whereas the one above is `/home/sandbox/Desktop/stuff`.
+
+    - What is the difference? If you add a `/` at the end, it copies all the files of the folder over, but not the folder itself. If you don't add a `/`, it copies over the folder, __and__ all the files within it.
+    - Both still back up all relevant files, it's just one copies over the folder on top of those as well.
+
+Congratulations. You now have set up an automatic cronjob to remotely back stuff up to an external server! If your server with the files gets breached, you now have a contingency copy of all the files you decided to back up on another, (hopefully) non-breached server.
+
+* Something to think about for competition: If your backup server isn't a critical component of your network (e.g. it's not getting scored), then it is a good idea to potentially disconnect it from the network after you've backed up everything to it from all important machines and their files.
+
+
+
+
+
+## 37: The UFW firewall (no iptables anymore woohoo) 🔥
+
+The scenario: We're trying to secure the services that we've set up on two machines:
+- The Internal Kali machine
+- The Internal Ubuntu machine
