@@ -1041,4 +1041,12 @@ __So... why not just use the `cp` command?__
     - For competitions, though, we may get away with it without causing too much clutter.
 
 
-### Cron
+### 35: Cron and cronjobs 🕐
+
+* Is cron installed on your system?: `sudo systemctl status cron` (or `crond`)
+
+As part of the cron program, you get what are called "cron tabs"
+    - These are files that include automatic commands
+
+* The question, now, is: How many of these crontabs are there and where are they on our system?
+    - One way to see some of these is by running `crontab -e`
