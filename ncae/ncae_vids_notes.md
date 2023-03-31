@@ -1202,3 +1202,44 @@ When you need to do something related to firewalling on Linux, ask yourself:
     - If it is inactive, enable it with `sudo ufw enable`
 
 * When you first enable ufw, the defaults are very extremely barebones. They're not gonna be blocking or allowing much specifically.
+
+### Adding firewall rules to allow/deny certain traffic
+
+* `sudo ufw allow from 192.168.<team_number>.100`
+    - Essentially tells UFW to "trust" communication if it's coming from the Kali machine
+    - `sudo ufw status` to check if the rule got applied
+
+* `sudo ufw deny from 192.168.<team_number>.0/24`
+    - Tells UFW to deny all other traffic from any other computer on the network
+    - This rule gets listed UNDER the allow rule that we made for the Kali machine. This means that UFW will check first if it's traffic from Kali-Internal and allow it if so, or, deny it if it's from any other device that's not Kali-Internal.
+
+
+### Get verbose UFW status
+
+Simply run `sudo ufw status verbose`
+
+__Note that by default, UFW denies all incoming traffic.__
+    - This WILL mess you up in a competition scenario if you don't apply rules to allow necessary traffic to reach your systems (e.g. if score check machine can't reach a web server).
+    - Users need
+
+
+### Adding more types of rules
+
+* `sudo ufw allow ssh`
+    - This enables incoming SSH traffic.
+    - Note that this rule gets appended to the bottom of our UFW rules when we type in `sudo ufw status`. This means that our previous rule about blocking local traffic from the `192.168.<team_number>.0/24` range takes priority over this.
+    What this means: External traffic can log in with SSH to our web server, but local machines that aren't from Internal-Kali cannot.
+    - One additional note: This rule by default requires that TCP traffic be allowed to, so it goes ahead and adds the rule to allow tcp traffic for both IPv4 and IPv6 addresses. __If you're not using IPv6 on your network (usually the case), you may want to remove the IPv6 related rule__ (`sudo ufw remove #`, where # is the rule number of the rule)
+
+
+### Removing iptables rules
+
+Previously I mentioned removing rule based on their rule number. Here's an easy way to see their numbers:
+
+`sudo ufw status numbered`
+
+* After finding the one you want to delete, simply `sudo ufw delete #`
+
+
+__NOTE__: Every time you delete a rule, the rules below that rule get re-numbered.
+    - Stop and think when you have a bunch of rules and you're deleting stuff, re-list the rules to ensure the numbers you're deleting are what you think they are.
