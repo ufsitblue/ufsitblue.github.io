@@ -1111,7 +1111,7 @@ What if we opened up one of our cron folders and we had something like:
 
 
 
-## 35: Rsync and cron: automatic, secure backups 🕐🔏
+## 36: Rsync and cron: automatic, secure backups 🕐🔏
 
 Let's start thinking about our backups and cronjobs at a broader scale: doing stuff across our local network.
 
