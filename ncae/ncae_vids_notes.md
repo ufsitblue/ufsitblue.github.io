@@ -1082,7 +1082,27 @@ A: `* * * * * rsync -av /home/sandbox/Desktop/stuff/ /home/sandbox/Desktop/backu
 
 ### System-wide conjobs
 
+__Important thing to note about system-wide crontabs__:
+After the frequency settings of a cronjob line (i.e. the `* * * * *` -style part), system-wide crontabs must specify the user to run the command as (e.g. `root` to run a cronjob as root).
+
 In the `/etc/` directory, you will probably have:
-- `cron.d`: cron example snippets
-- `cron.daily`: system-wide daily cronjobs
-- `cron.hourly`: s
+- `crontab`: a regular crontab file for system-wide cronjobs.
+- `cron.d`: a directory for storing system-wide crontab files (this directory is usually used by services on a server -- as opposed to /etc/crontab/ -- to avoid having to edit the `crontab` file directly)
+- `cron.daily`: directory for system-wide programs that get run daily
+- `cron.hourly`: same idea
+- `cron.monthly`: same idea
+- `cron.weekly`: same idea
+
+### Why use /etc/crontab instead of crontab -e
+
+What if a user doesn't have the permissions to run a certain command they want to make a cronjob for?
+
+
+### Potentially malicious cronjobs?
+
+What if we opened up one of our cron folders and we had something like:
+`* * * * * root nc -lvnp 12345 -e /bin/bash`
+
+* This is a malicious backdoor!
+    - It runs every minute, giving a reverse shell to whoever connects on port 12345 on the machine
+    - Even if you kill the bash process that's listening on that port, a new one is just gonna get created.
