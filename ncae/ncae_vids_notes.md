@@ -799,7 +799,7 @@ This files has some zones already added, so we use them as templates to add our 
 
 Forward-lookup zone (append these lines at end of file):
 ```
-zone "ncaecybergames.org" IN
+zone "ncaecybergames.org" IN {
     type master;
     file "/etc/bind/zones/forward.ncaecybergames.org";
     allow-update { none; };
@@ -808,7 +808,7 @@ zone "ncaecybergames.org" IN
 
 Reverse-lookup zone:
 ```
-zone "<team_number>.168.192.in-addr.arpa" IN
+zone "<team_number>.168.192.in-addr.arpa" IN {
     type master;
     file "/etc/bind/zones/reverse.ncaecybergames.org";
     allow-update { none; };
