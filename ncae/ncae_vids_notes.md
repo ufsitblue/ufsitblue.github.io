@@ -1434,7 +1434,7 @@ e.g. `wall "Server shutting down in 5 minutes!"`
 
 
 
-## APPENDIX: auditd
+## APPENDIX 1: auditd
 
 Auditd, paired with the right config, can make Linux command-line monitoring/logging __very__ powerful.
 
@@ -1447,3 +1447,9 @@ You can even pair it with a SIEM (Security Information and Event Management) pro
 5. Copy that config over to /etc/audit/auditd.conf
 6. Restart service
 7. Search through auditd logs with `ausearch -k <key>` where 'key' is the label for each type of security event (check the config file -- it explains further in its comments)
+
+
+
+
+
+## APPENDIX 2:opensnitch instructions
