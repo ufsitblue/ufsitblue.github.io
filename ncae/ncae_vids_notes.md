@@ -1359,6 +1359,9 @@ Scenario: Kali-Internal will act as the server we're defending/monitoring.
     - Needs to be run as root (sudo)
     - When users bob and jenny are connected via ssh, __this is the command that will show which processes their shells correspond to__.
 
+* The `netstat -plunet` option
+    - Use this for comp
+
 ### Booting off Jenny
 
 Let's say we see jenny's SSH session in the `netstat -tunap` option, and jenny turns out to be a malicious hacker.
