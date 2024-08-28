@@ -1,7 +1,7 @@
 ## Auditd and sysmon notes
 
 Coming soon (insert 90s-style GeoCities "Under construction" GIF)
-
+;)
 <br />
 
 
